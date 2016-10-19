@@ -88,12 +88,12 @@ void myls(char **roots) {
         int len = strlen(roots[0]);
         currPath = malloc(len * (sizeof(char)));
         strcpy(currPath, roots[0]);
-        printf("Evaluating external directory: %s\n", currPath);
+        //printf("Evaluating external directory: %s\n", currPath);
     }else if(getcwd(temp, sizeof(temp))){   //we werent given a directory so we default to the current dir
         int len = strlen(temp);
         currPath = malloc(len * (sizeof(char)));
         strcpy(currPath, temp);
-        printf("Current Path: %s\n", currPath);
+        //printf("Current Path: %s\n", currPath);
     }else{                                  //we are unable to get the path ERROR
         printf("Path error!\n");
         exit(1);
@@ -107,7 +107,7 @@ void myls(char **roots) {
     numFiles = 0;
 
     if((myDir = opendir(currPath)) != NULL){
-        perror("oppened directory \n");
+        //perror("oppened directory \n");
         while((entry = readdir(myDir)) != NULL){
             char * name = entry->d_name; //gets the file name
             if(name == NULL){ //skips nyll names
