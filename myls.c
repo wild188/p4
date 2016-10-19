@@ -24,30 +24,55 @@ void print(){
     }
 }
 
+//used to alphabatize teh files
 static int myCompare(const void * word1, const void * word2){
-    /*
-    int diffCase = strcasecmp(word1, word2);
-    if(!diffCase){
-        return -diffCase;
-    }
-    */
+    //converting the void pointers to char stars
     char * w1 = *(char * const *)(word1);
     char * w2 = *(char * const *)(word2);
 
+    //incremental variables
     char a, b;
     int i = 0;
-    while(w1[i] && w2[i]){
+    int h = 0;
+
+    //compares each charachter from beginning to end unless unequal
+    while(w1[i] && w2[h]){
         a = w1[i];
-        b = w2[i];
+        b = w2[h];
+        
+        //ignore non alphanumeric characters
+        if(!isalnum(a)){
+            i++;
+            continue;
+        }
+        if(!isalnum(b)){
+            h++;
+            continue;
+        }
+
+        //puts all characters to lower case
         a = tolower(a);
         b = tolower(b);
+        
+        //if characters are not equal return the difference
         if(a != b){
-            //printf("%s - %s = %i\n", w1, w2, (a - b));
             return (a - b);
         }
         i++;
+        h++;
     }
+
+    //return negative or possitive if one word is longer
+    if(w1[i]){
+        return w1[i];
+    }
+    if(w2[h]){
+        return -w2[h];
+    }
+
+    //the words are alphabetically the same
     return 0;
+
     //int result = strcmp((* (char * const *)(word1)), (* (char * const *)(word2)));
     //return result;
 }
