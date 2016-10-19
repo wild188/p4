@@ -1,0 +1,125 @@
+CSE303 - Fall 2016
+Assignment #4: Exploring the Filesystem API
+
+Purpose and General Guidelines:
+
+  It is reasonable to think of a filesystem as being nothing more than a data
+  structure.  The operations of that data structure can vary, depending on
+  the operating system.  They may also have different asymptotic
+  complexities, and filesystem methods may have different meanings on an
+  OS-by-OS basis.  A few examples are that (a) UNIX filesystems support the
+  concept of reference-counted "hard links", whereas NTFS does not; (b) the
+  MS-DOS FAT filesystem exposes a "seek" operation that is linear in the size
+  of the file, whereas UNIX filesystems expose a "seek" operation that is
+  logarithmic in the size of the file; and (c) UNIX filesystems require the
+  'accessed time' to be updated when a file is read, resulting in a disk
+  write of file metadata even when the file contents are in the cache.
+
+  The underlying interface to the filesystem is typically hidden behind a
+  high-level API.  In this project, we will explore that API through a number
+  of simple projects.
+  
+  This is an individual assignment.  Every bit of code that a student submits
+  as part of this assignment should be her or his own work.  You may consult
+  question-and-answer websites such as StackOverflow to see how other people
+  have tried, failed, and then received assistance in their attempts at these
+  and similar problems.  However, you may not use other people's code.  Be
+  conservative in your judgment.  Anything on GitHub is obviously off limits.
+  Anything written by your classmates is off limits.  By this point in your
+  academic career, you should know how to be ethical.
+
+Warning
+
+  Your ls codes are expected to *exactly* match the output of UNIX's ls
+  command.  If they do not, you will not receive any points.  You should
+  think of UNIX ls as a specification that your code is required to meet.
+
+Getting the Files
+
+  The source code that you will be editing can be found in the /proj/spear0/
+  folder on the sunlab machines.  From your sunlab account, you should make a
+  protected folder where you will work on this project, then copy the source
+  code and unpack it.  You should know how to do this by now, but just in
+  case you don't, here is a sequence of commands that should work, once you
+  are logged into the sunlab:
+  
+    cd ~/
+    mkdir cse303
+    chmod 700 cse303
+    cd cse303
+    tar -xzvf /proj/spear0/cse303_p4.tgz
+
+  This will create a subfolder with the project 4 source code in it.  The
+  assignment requires you to edit the files in the folder to complete several
+  tasks.
+
+Task #0: Tell us who you are
+
+  You should edit the 'student.c' file to provide your name and email
+  address.  Until you do this, none of your programs will execute.
+  
+Task #1: Mimic the behavior of 'ls' with 'myls'
+
+  In the 'myls' file, you should implement the same functionality as the UNIX
+  '/bin/ls -1' command.  That is, when no command line arguments are given,
+  you should produce a sorted listing of the files in the current directory.
+  If any command-line arguments are given, then for each, you should either
+  (a) print that file name, or (b) list the contents of the corresponding
+  directory.
+
+  Remember to pay careful attention to the order in which information is
+  output.  Your output must match the '/bin/ls -1' (that's 'one', not 'ell')
+  command exactly.  Note '-1' indicates that 'ls' should only output one file
+  per line.  Duplicates are not necessarily handled how you'd expect.
+
+Task #2: Mimic the behavior of 'ls -a' with 'mylsa'
+
+  This is a rather straightforward extension to the previous task: now you
+  should mimic the behavior of '/bin/ls -a -1' in your 'mylsa' program.  The
+  '-a' flag indicates that all hidden files should be displayed, in addition
+  to all non-hidden files.
+
+Task #3: Mimic the behavior of 'ls -R' with 'mylsr'
+
+  The '-R' flag indicates that a listing should be recursive.  That is, for
+  every subdirectory of the directory being displayed, you should list its
+  contents (and the subdirectories thereof, recursively...)
+
+  You should pay careful attention to how symbolic ("soft") links and
+  non-symbolic ("hard") links are handled by the '/bin/ls -R' command.  Are
+  symlinks explored?  Is a cycle in hardlinks explored recursively, forever?
+  Your program should have the same behavior (and you might want to go back
+  and check that you handled links correctly in Task #1!)
+
+  To make this task slightly easier, you can assume mylsr will never be given
+  more than one command-line argument.  That is, you'll either be listing the
+  contents of the current directory (no arguments given) or using the single
+  parameter (which may or may not be a directory).
+
+Task #4: Mimic the behavior of 'ls -l' with 'mylsl'
+
+  Note that this is not "minus one", but "minus ell".  The '-l' flag produces
+  a "long" listing format, including information about file permissions,
+  size, and time of last access.
+
+  Be sure to understand the full meaning of the 'ls -l' command.  You should
+  type 'info ls' and explore the tree of information therein.  Section 10.1.2
+  "What information is listed" is particularly useful.
+
+Task #5: Implement a simple recursive grep with 'myrgrep'
+
+  Our final task is to perform a recursive grep.  Your 'myrgrep' program
+  should take two non-prefixed parameters: the search text and the starting
+  point (either a folder name or a file name).  From there, 'myrgrep' should
+  access every file in the tree rooted at the starting point.  For each file,
+  if the file contains the search text, then 'myrgrep' should print the full
+  path and name of the file.
+
+Turn-In Instructions
+
+  To turn in your solutions, type 'make turnin'.
+
+  You may turn in your solutions as many times as you like.  The last turn-in
+  received before grading begins is the only turn-in that will be graded.
+
+  Any task whose code does not compile will receive 0 points.
