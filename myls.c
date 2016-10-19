@@ -9,6 +9,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <ctype.h>
+#include <errno.h>
 
 /*
  * myls() - produce the appropriate directory listing(s)
@@ -79,25 +80,26 @@ static int myCompare(const void * word1, const void * word2){
 
 //why is roots a char **?
 void myls(char **roots) { 
-    /* TODO: Complete this function */
+    
+    //getting the path to the directory we will analyze
     char * currPath;
     char temp[1024];
-    if(roots[0] != NULL){
+    if(roots[0] != NULL){                   //we were given a directory so we use that one
         int len = strlen(roots[0]);
         currPath = malloc(len * (sizeof(char)));
         strcpy(currPath, roots[0]);
         printf("Evaluating external directory: %s\n", currPath);
-    }else if(getcwd(temp, sizeof(temp))){
+    }else if(getcwd(temp, sizeof(temp))){   //we werent given a directory so we default to the current dir
         int len = strlen(temp);
         currPath = malloc(len * (sizeof(char)));
         strcpy(currPath, temp);
         printf("Current Path: %s\n", currPath);
-    }else{
+    }else{                                  //we are unable to get the path ERROR
         printf("Path error!\n");
         exit(1);
     }
     
-
+    //setting up directory and incremental variables
     DIR* myDir;
     struct dirent * entry;
     int buffinc = 1;
@@ -107,8 +109,8 @@ void myls(char **roots) {
     if((myDir = opendir(currPath)) != NULL){
         perror("oppened directory \n");
         while((entry = readdir(myDir)) != NULL){
-            char * name = entry->d_name;
-            if(name == NULL){
+            char * name = entry->d_name; //gets the file name
+            if(name == NULL){ //skips nyll names
                 continue;
             }else{
                 if(name[0] == '.'){
@@ -116,20 +118,26 @@ void myls(char **roots) {
                 }else{
                     numFiles++;
 
+                    //increments file buffer if we excede 1024 files
                     if(numFiles > (1024 * buffinc)){
                         files = realloc(files, ((numFiles + 1024) * sizeof(char *)));
                         buffinc++;
                     }
 
-                    //files = realloc(files, (numFiles * sizeof(char *)));
+                    //stores the name of the file in the file list
                     files[numFiles -1] = malloc(strlen(name) * sizeof(char));
                     strcpy(files[numFiles - 1], name);
-                    //printf("%s \n", name);
                 }
             }
         }
     }else{
-        printf("Problem openning directory.\n");
+        if(errno == ENOTDIR){       //if we are given a file
+            printf("%s\n", currPath);
+        }else{                      //unable to open the directory ERROR
+            printf("Problem openning directory.\n");
+            exit(1);
+        }
+        
     }
     qsort(files, numFiles, sizeof(char *), myCompare);
     print();
