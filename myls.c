@@ -10,6 +10,7 @@
 #include <sys/types.h>
 #include <ctype.h>
 #include <errno.h>
+#include <sys/stat.h>
 
 /*
  * myls() - produce the appropriate directory listing(s)
@@ -21,6 +22,13 @@ int numFiles;
 void print(){
     int i;
     for(i = 0; i < numFiles; i++){
+        struct stat fileInfo;
+        if(stat(files[i], &fileInfo) == 0){
+            if(fileInfo.st_mode & S_IXUSR){
+                printf("%s*\n", files[i]);
+                continue;
+            }
+        }
         printf("%s\n", files[i]);
     }
 }
