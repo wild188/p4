@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <ctype.h>
 #include <errno.h>
+#include <sys/stat.h>
 
 /*
  * mylsa() - produce the appropriate directory listing(s)
@@ -19,7 +20,19 @@ int numFiles;
 void print(){
     int i;
     for(i = 0; i < numFiles; i++){
-        printf("%s\n", files[i]);
+        struct stat fileInfo;
+        if(stat(files[i], &fileInfo) == 0){
+            if(S_ISDIR(fileInfo.st_mode)){
+                printf("%s/\n", files[i]);
+            }else if(fileInfo.st_mode & S_IXUSR){
+                printf("%s*\n", files[i]);
+            }else{
+                printf("%s\n", files[i]);
+            }
+        }else{
+            perror("Failed to stat file\n");
+        }
+        
     }
 }
 

@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <ctype.h>
 #include <errno.h>
+#include <sys/stat.h>
 
 /*
  * mylsr() - produce the appropriate directory listing(s)
@@ -24,6 +25,7 @@ void print(){
         printf("%s\n", files[i]);
     }
 }
+
 
 //used to alphabatize teh files
 static int myCompare(const void * word1, const void * word2){

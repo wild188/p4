@@ -24,12 +24,17 @@ void print(){
     for(i = 0; i < numFiles; i++){
         struct stat fileInfo;
         if(stat(files[i], &fileInfo) == 0){
-            if(fileInfo.st_mode & S_IXUSR){
+            if(S_ISDIR(fileInfo.st_mode)){
+                printf("%s/\n", files[i]);
+            }else if(fileInfo.st_mode & S_IXUSR){
                 printf("%s*\n", files[i]);
-                continue;
+            }else{
+                printf("%s\n", files[i]);
             }
+        }else{
+            perror("Failed to stat file\n");
         }
-        printf("%s\n", files[i]);
+        
     }
 }
 
