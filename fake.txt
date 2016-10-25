@@ -1,0 +1,48 @@
+Student: Billy DeLucia
+Email  : wld217
+
+ls: cannot access /sadf: No such file or directory
+/vmlinuz
+
+/:
+bin/
+boot/
+cdrom/
+dev/
+etc/
+home/
+initrd.img
+initrd.img.old
+lib/
+lib64/
+lost+found/
+media/
+mnt/
+opt/
+proc/
+root/
+run/
+sbin/
+snap/
+srv/
+sys/
+tmp/
+usr/
+var/
+vmlinuz
+vmlinuz.old
+
+/home/billy/Documents/:
+cse303/
+
+/home/billy/Documents/cse303/:
+compare returning 0
+Backup/
+cse303.p3/
+cse303p4/
+cse303.p4/
+iNodeAccess.txt
+iNode.c
+p4/
+p4b/
+

@@ -38,7 +38,7 @@ void print(){
                 printf("%s\n", curFiles[i]);
             }
         }else{
-            printf("%s\n", filePath);
+            //printf("%s\n", filePath);
             perror("Failed to stat file\n");
         }
         
@@ -90,7 +90,7 @@ static int myCompare(const void * word1, const void * word2){
     if(w2[h]){
         return -w2[h];
     }
-
+    printf("compare returning 0\n");
     //the words are alphabetically the same
     return 0;
 
@@ -106,21 +106,22 @@ void mylsHelper(char * dirName){
     char * currPath;
     char temp[1024];
     if(dirName != NULL){                   //we were given a directory so we use that one
+
+        currPath = strdup(dirName);
+        /*
         int len = strlen(dirName);
-        currPath = malloc(len * (sizeof(char)));
+        currPath = malloc((len + 1)* (sizeof(char)));
         strcpy(currPath, dirName);
+        */
         //printf("Evaluating external directory: %s\n", currPath);
     }else if(getcwd(temp, sizeof(temp))){   //we werent given a directory so we default to the current dir
-        int len = strlen(temp);
-        currPath = malloc(len * (sizeof(char)));
-        strcpy(currPath, temp);
+        currPath = strdup(temp);
         //printf("Current Path: %s\n", currPath);
     }else{                                  //we are unable to get the path ERROR
         printf("Path error!\n");
         exit(1);
     }
-    currentPath = malloc(strlen(currPath) * sizeof(char));
-    strcpy(currentPath, currPath);
+    currentPath = strdup(currPath);
     //setting up directory and incremental variables
     DIR* myDir;
     struct dirent * entry;
@@ -147,11 +148,11 @@ void mylsHelper(char * dirName){
                     }
 
                     //stores the name of the file in the file list
-                    curFiles[numCurFiles -1] = malloc(strlen(name) * sizeof(char));
-                    strcpy(curFiles[numCurFiles - 1], name);
+                    curFiles[numCurFiles -1] = strdup(name);
                 }
             }
         }
+        closedir(myDir);
     }else{
         if(errno == ENOTDIR){       //if we are given a file
             printf("%s\n", currPath);
@@ -161,6 +162,8 @@ void mylsHelper(char * dirName){
         }
         
     }
+    
+
     qsort(curFiles, numCurFiles, sizeof(char *), myCompare);
     print();
     int i;
@@ -168,13 +171,13 @@ void mylsHelper(char * dirName){
         free(curFiles[i]);
     }
     free(curFiles);
+    free(currPath);
+    free(currentPath);
 }
 
-//why is roots a char **?
+//takes in all arguments and calls an ls on each default is current directory
 void myls(char **roots, int num) { 
-    
-    //printf("entering new myls\n");
-
+ 
     if(num == 0){
         mylsHelper(NULL);
         return;
@@ -189,8 +192,6 @@ void myls(char **roots, int num) {
     int fileInc = 0;
     int dirInc = 0;
     for(i = 0; i < num; i++){
-        //printf("loop %i of %i \n", i, (num - 1));
-
         struct stat info;
         if(stat(roots[i], &info) == 0){
             if(S_ISDIR(info.st_mode)){
@@ -198,22 +199,14 @@ void myls(char **roots, int num) {
                     dirs = realloc(dirs, (numDirs + 1024) * sizeof(char *));
                     dirInc++;
                 }
-
-                //printf("Adding dir %s\n", roots[i]);
-
-                dirs[numDirs] = malloc((strlen(roots[i]) + 1) * sizeof(char));
-                strcpy(dirs[numDirs], roots[i]);
-
-                //printf("Sucking balls\n");
-
+                dirs[numDirs] = strdup(roots[i]);
                 numDirs++;
             }else if(S_ISREG(info.st_mode)){
                 if(numFiles > (1023 * fileInc)){
                     files = realloc(files, (numFiles + 1024) * sizeof(char *));
                     fileInc++;
                 }
-                files[numFiles] = malloc(strlen(roots[i]) * sizeof(char));
-                strcpy(files[numFiles], roots[i]);
+                files[numFiles] = strdup(roots[i]);
                 numFiles++;
             }
         }else{
@@ -278,25 +271,10 @@ int main(int argc, char **argv) {
 
     /* TODO: fix this invocation */
 
-    printf("args: %i\n", argc);
-
     if(argc > 1){
         myls(++argv, --argc);
     }else{
          myls(NULL, 0);
     }
    
-
-    /*
-    char * target = NULL;
-    if(argc > 1){
-        target = argv[1];
-        printf("%s\n", target);
-    }
-
-    char * pass[1];
-    pass[0] = target;
-
-    myls(pass);
-    */
 }
