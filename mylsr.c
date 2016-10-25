@@ -17,6 +17,8 @@
 char ** files;
 int numFiles;
 
+char * prefix;
+
 void mylsr(char **roots);
 
 void print(){
@@ -86,6 +88,8 @@ void subdir(){
         DIR* subdir;
         if((subdir = opendir(files[i])) != NULL){
             closedir(subdir);
+            prefix = malloc(strlen(files[i]) * sizeof(char));
+            //prefix 
             printf("\n");
             char * pass[1];
             pass[0] = files[i];
