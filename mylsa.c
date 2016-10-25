@@ -14,22 +14,29 @@
 /*
  * mylsa() - produce the appropriate directory listing(s)
  */
-char ** files;
-int numFiles;
+char ** curFiles;
+int numCurFiles;
+char * currentPath;
 
 void print(){
     int i;
-    for(i = 0; i < numFiles; i++){
+    
+    for(i = 0; i < numCurFiles; i++){
         struct stat fileInfo;
-        if(stat(files[i], &fileInfo) == 0){
+        char filePath[1024];
+        filePath[0] = '\0';
+        strcat(filePath, currentPath);
+        strcat(filePath, curFiles[i]);
+        if(stat(filePath, &fileInfo) == 0){
             if(S_ISDIR(fileInfo.st_mode)){
-                printf("%s/\n", files[i]);
+                printf("%s/\n", curFiles[i]);
             }else if(fileInfo.st_mode & S_IXUSR){
-                printf("%s*\n", files[i]);
+                printf("%s*\n", curFiles[i]);
             }else{
-                printf("%s\n", files[i]);
+                printf("%s\n", curFiles[i]);
             }
         }else{
+            //printf("%s\n", filePath);
             perror("Failed to stat file\n");
         }
         
@@ -81,7 +88,7 @@ static int myCompare(const void * word1, const void * word2){
     if(w2[h]){
         return -w2[h];
     }
-
+    printf("compare returning 0\n");
     //the words are alphabetically the same
     return 0;
 
@@ -89,33 +96,40 @@ static int myCompare(const void * word1, const void * word2){
     //return result;
 }
 
-//why is roots a char **?
-void mylsa(char **roots) { 
-    
+void mylsaHelper(char * dirName){
+
+    //printf("entering old myls\n");
+
     //getting the path to the directory we will analyze
     char * currPath;
     char temp[1024];
-    if(roots[0] != NULL){                   //we were given a directory so we use that one
-        int len = strlen(roots[0]);
-        currPath = malloc(len * (sizeof(char)));
-        strcpy(currPath, roots[0]);
+    if(dirName != NULL){                   //we were given a directory so we use that one
+
+        currPath = strdup(dirName);
+        /*
+        int len = strlen(dirName);
+        currPath = malloc((len + 1)* (sizeof(char)));
+        strcpy(currPath, dirName);
+        */
         //printf("Evaluating external directory: %s\n", currPath);
     }else if(getcwd(temp, sizeof(temp))){   //we werent given a directory so we default to the current dir
-        int len = strlen(temp);
-        currPath = malloc(len * (sizeof(char)));
+        currPath = malloc((strlen(temp) + 2) * sizeof(char));
         strcpy(currPath, temp);
+        strcat(currPath, "/");
+        //currPath = strdup(temp);
+        //printf("%s\n", currPath);
         //printf("Current Path: %s\n", currPath);
     }else{                                  //we are unable to get the path ERROR
         printf("Path error!\n");
         exit(1);
     }
-    
+    currentPath = strdup(currPath);
     //setting up directory and incremental variables
     DIR* myDir;
     struct dirent * entry;
     int buffinc = 1;
-    files = malloc(1024 * sizeof(char *));
-    numFiles = 0;
+    curFiles = malloc(1024 * sizeof(char *));
+    numCurFiles = 0;
 
     if((myDir = opendir(currPath)) != NULL){
         //perror("oppened directory \n");
@@ -124,18 +138,21 @@ void mylsa(char **roots) {
             if(name == NULL){ //skips nyll names
                 continue;
             }else{
-                numFiles++;
-                //increments file buffer if we excede 1024 files
-                if(numFiles > (1024 * buffinc)){
-                    files = realloc(files, ((numFiles + 1024) * sizeof(char *)));
-                    buffinc++;
-                }
+                
+                    numCurFiles++;
 
-                //stores the name of the file in the file list
-                files[numFiles -1] = malloc(strlen(name) * sizeof(char));
-                strcpy(files[numFiles - 1], name);
+                    //increments file buffer if we excede 1024 files
+                    if(numCurFiles > (1024 * buffinc)){
+                        curFiles = realloc(curFiles, ((numCurFiles + 1024) * sizeof(char *)));
+                        buffinc++;
+                    }
+
+                    //stores the name of the file in the file list
+                    curFiles[numCurFiles -1] = strdup(name);
+                
             }
         }
+        closedir(myDir);
     }else{
         if(errno == ENOTDIR){       //if we are given a file
             printf("%s\n", currPath);
@@ -145,8 +162,82 @@ void mylsa(char **roots) {
         }
         
     }
-    qsort(files, numFiles, sizeof(char *), myCompare);
+    
+
+    qsort(curFiles, numCurFiles, sizeof(char *), myCompare);
     print();
+    int i;
+    for(i = 0; i < numCurFiles; i++){
+        free(curFiles[i]);
+    }
+    free(curFiles);
+    free(currPath);
+    free(currentPath);
+}
+
+//takes in all arguments and calls an ls on each default is current directory
+void mylsa(char **roots, int num) { 
+ 
+    if(num == 0){
+        mylsaHelper(NULL);
+        return;
+    }   
+
+    int i;
+    char ** files = malloc(1024 *sizeof(char *));
+    int numFiles = 0;
+    char ** dirs = malloc(1024 * sizeof(char *));
+    int numDirs = 0;
+
+    int fileInc = 0;
+    int dirInc = 0;
+    for(i = 0; i < num; i++){
+        struct stat info;
+        if(stat(roots[i], &info) == 0){
+            if(S_ISDIR(info.st_mode)){
+                if(numDirs > (1023 * dirInc)){
+                    dirs = realloc(dirs, (numDirs + 1024) * sizeof(char *));
+                    dirInc++;
+                }
+                dirs[numDirs] = strdup(roots[i]);
+                numDirs++;
+            }else if(S_ISREG(info.st_mode)){
+                if(numFiles > (1023 * fileInc)){
+                    files = realloc(files, (numFiles + 1024) * sizeof(char *));
+                    fileInc++;
+                }
+                files[numFiles] = strdup(roots[i]);
+                numFiles++;
+            }
+        }else{
+            printf("ls: cannot access %s: No such file or directory\n", roots[i]);
+        }
+    }
+    
+    qsort(files, numFiles, sizeof(char *), myCompare);
+    for(i = 0; i < numFiles; i++){
+        mylsaHelper(files[i]);
+        free(files[i]);
+    }
+    free(files);
+
+    if(numDirs < num){
+        printf("\n");
+    }
+
+    qsort(dirs, numDirs, sizeof(char *), myCompare);
+    for(i = 0; i < numDirs; i++){
+        if(numDirs > 1){
+            printf("%s:\n", dirs[i]);
+            mylsaHelper(dirs[i]);
+            printf("\n");
+        }else{
+            mylsaHelper(dirs[i]);
+        }
+        free(dirs[i]);
+    }
+    free(dirs);
+
 }
 
 /*
@@ -181,14 +272,9 @@ int main(int argc, char **argv) {
 
     /* TODO: fix this invocation */
     
-    char * target = NULL;
     if(argc > 1){
-        target = argv[1];
-        printf("%s\n", target);
+        mylsa(++argv, --argc);
+    }else{
+         mylsa(NULL, 0);
     }
-
-    char * pass[1];
-    pass[0] = target;
-
-    mylsa(pass);
 }
