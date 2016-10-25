@@ -115,7 +115,11 @@ void mylsHelper(char * dirName){
         */
         //printf("Evaluating external directory: %s\n", currPath);
     }else if(getcwd(temp, sizeof(temp))){   //we werent given a directory so we default to the current dir
-        currPath = strdup(temp);
+        currPath = malloc((strlen(temp) + 2) * sizeof(char));
+        strcpy(currPath, temp);
+        strcat(currPath, "/");
+        //currPath = strdup(temp);
+        //printf("%s\n", currPath);
         //printf("Current Path: %s\n", currPath);
     }else{                                  //we are unable to get the path ERROR
         printf("Path error!\n");
