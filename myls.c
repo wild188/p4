@@ -226,7 +226,7 @@ void myls(char **roots, int num) {
     }
 
     qsort(dirs, numDirs, sizeof(char *), myCompare);
-    for(int i; i < numDirs; i++){
+    for(i = 0; i < numDirs; i++){
         if(numDirs > 1){
             printf("%s:\n", dirs[i]);
             mylsHelper(dirs[i]);
