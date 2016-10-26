@@ -97,7 +97,7 @@ static int myCompare(const void * word1, const void * word2){
     if(w2[h]){
         return -w2[h];
     }
-    printf("compare returning 0\n");
+    //printf("compare returning 0\n");
     //the words are alphabetically the same
     return 0;
 
@@ -211,15 +211,18 @@ void mylsrHelper(char * dirName){
     
     
     qsort(curFiles, numCurFiles, sizeof(char *), myCompare);
+    
+    if(numSubDirs > 0){
+        printf("%s:\n", currPath);
+    }
+    
     print(curFiles, numCurFiles, currPath);
     int i;
     for(i = 0; i < numCurFiles; i++){
         free(curFiles[i]);
     }
 
-    if(numSubDirs > 0){
-        printf("\n");
-    }
+    
 
     qsort(subDirs, numSubDirs, sizeof(char *), myCompare);
     for(i = 0; i < numSubDirs; i++){
