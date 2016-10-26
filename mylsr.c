@@ -22,6 +22,7 @@
 //char * currentPath;
 
 char * prefix;
+int root;
 
 void print(char ** curFiles, int numCurFiles, char * currentPath){
     int i;
@@ -212,10 +213,13 @@ void mylsrHelper(char * dirName){
     
     qsort(curFiles, numCurFiles, sizeof(char *), myCompare);
     
-    if(numSubDirs > 0){
+    
+    if(numSubDirs > 0 && root){
         printf("%s:\n", currPath);
+        root = 0;
     }
     
+
     print(curFiles, numCurFiles, currPath);
     int i;
     for(i = 0; i < numCurFiles; i++){
@@ -257,7 +261,7 @@ void subdir(char ** curFiles, int numCurFiles, char * currentPath){
 
 //takes in all arguments and calls an ls on each default is current directory
 void mylsr(char **roots, int num) { 
- 
+    root = 1;
     if(num == 0){
         mylsrHelper(NULL);
         return;
