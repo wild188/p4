@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 #include <pwd.h>
 #include <grp.h>
+#include <time.h> 
 
 /*
  * mylsl() - produce the appropriate directory listing(s)
@@ -59,9 +60,12 @@ void print(){
 
             off_t fileSize = fileInfo.st_size;
 
-            time_t modTime = fileInfo.st_mtime;
+            time_t rawModTime = fileInfo.st_mtime;
+            struct tm * locModTime = localtime(&rawModTime);
+            char modTime[13];
+            strftime(modTime, 13, "%b %m %H:%M", locModTime); 
 
-            printf("%s. %u %s %s %ld ", permissions, hardLinks, ownerName, groupName, fileSize);
+            printf("%s. %3u %s %s %*ld %s ", permissions, hardLinks, ownerName, groupName, 5, fileSize, modTime);
             
 
             if(S_ISDIR(fileInfo.st_mode)){
