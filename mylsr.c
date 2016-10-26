@@ -133,8 +133,10 @@ void mylsrHelper(char * dirName){
         //printf("%s\n", currPath);
         //printf("Current Path: %s\n", currPath);
     }else{
-        currPath = malloc(3 * sizeof(char));
-        currPath = "./";
+        //currPath = malloc(3 * sizeof(char));
+        //currPath = "./";
+         currPath = strdup("./");
+         
                                           //we are unable to get the path ERROR
         //printf("Path error!\n");
         //exit(1);
@@ -239,6 +241,7 @@ void mylsrHelper(char * dirName){
         free(subPath);
         free(subDirs[i]);
     }
+
 
     free(curFiles);
     free(currPath);
