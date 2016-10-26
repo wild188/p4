@@ -61,9 +61,11 @@ void print(){
             off_t fileSize = fileInfo.st_size;
 
             time_t rawModTime = fileInfo.st_mtime;
+
+
             struct tm * locModTime = localtime(&rawModTime);
             char modTime[13];
-            strftime(modTime, 13, "%b %m %H:%M", locModTime); 
+            strftime(modTime, 13, "%b %d %H:%M", locModTime); 
 
             printf("%s. %3u %s %s %*ld %s ", permissions, hardLinks, ownerName, groupName, 5, fileSize, modTime);
             
