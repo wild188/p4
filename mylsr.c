@@ -169,12 +169,28 @@ void mylsrHelper(char * dirName){
                     }
 
                     struct stat posDir;
-                    if(stat(name, &posDir) == 0){
-                        if(S_ISDIR(posDir.st_mode)){
-                            subDirs[numSubDirs] = strdup(name);
-                            numSubDirs++;
-                        }
+                    char * filePath = malloc((strlen(currPath) + strlen(name) + 2) * sizeof(char));
+                    filePath[0] = '\0';
+                    strcat(filePath, currPath);
+                    if(filePath[strlen(filePath) - 1] != '/'){
+                        strcat(filePath, "/");
                     }
+                    
+                    strcat(filePath, name);
+                    if(stat(filePath, &posDir) >= 0){
+                        if(S_ISDIR(posDir.st_mode)){
+
+                            //printf("Found sub directory %s\n", filePath);
+
+                            subDirs[numSubDirs] = strdup(filePath);
+                            numSubDirs++;
+                        }else{
+                            //printf("%s is not a directory\n", filePath);
+                        }
+                    }else{
+                        //printf("%s is not a file\n", filePath);
+                    }
+                    free(filePath);
 
                     //stores the name of the file in the file list
                     curFiles[numCurFiles -1] = strdup(name);
@@ -187,7 +203,8 @@ void mylsrHelper(char * dirName){
             printf("%s\n", currPath);
         }else{                      //unable to open the directory ERROR
             printf("Problem openning directory.\n");
-            exit(1);
+            return;
+            //exit(1);
         }
         
     }
@@ -200,19 +217,25 @@ void mylsrHelper(char * dirName){
         free(curFiles[i]);
     }
 
+    if(numSubDirs > 0){
+        printf("\n");
+    }
+
     qsort(subDirs, numSubDirs, sizeof(char *), myCompare);
     for(i = 0; i < numSubDirs; i++){
         char * subPath = malloc((strlen(currPath) + strlen(subDirs[i]) + 1) * sizeof(char));
         subPath[0] = '\0';
         strcat(subPath, currPath);
         strcat(subPath, subDirs[i]);
-        printf("\n%s:\n", subPath);
-        mylsrHelper(subPath);
+        printf("\n%s:\n", subDirs[i]);
+        mylsrHelper(subDirs[i]);
+        free(subPath);
+        free(subDirs[i]);
     }
 
     free(curFiles);
     free(currPath);
-    //free(currentPath);
+    free(subDirs);
 }
 
 void subdir(char ** curFiles, int numCurFiles, char * currentPath){
