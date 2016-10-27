@@ -55,6 +55,8 @@ void print(char ** curFiles, int numCurFiles, char * currentPath){
             if(!grep_file(filePath, searchString)){
                 continue;
             }
+            printf("%s\n", filePath);
+            /*
             if(S_ISDIR(fileInfo.st_mode)){
                 printf("%s/\n", curFiles[i]);
             }else if(fileInfo.st_mode & S_IXUSR){
@@ -62,6 +64,7 @@ void print(char ** curFiles, int numCurFiles, char * currentPath){
             }else{
                 printf("%s\n", curFiles[i]);
             }
+            */
         }else{
             printf("%s\n", filePath);
             perror("Failed to stat file\n");
@@ -234,7 +237,7 @@ void myrgrepHelper(char * dirName){
     
     
     if(numSubDirs > 0 && root){
-        printf("%s:\n", currPath);
+        //printf("%s:\n", currPath);
         root = 0;
     }
     
@@ -253,7 +256,7 @@ void myrgrepHelper(char * dirName){
         subPath[0] = '\0';
         strcat(subPath, currPath);
         strcat(subPath, subDirs[i]);
-        printf("\n%s:\n", subDirs[i]);
+        //printf("\n%s:\n", subDirs[i]);
         myrgrepHelper(subDirs[i]);
         free(subPath);
         free(subDirs[i]);

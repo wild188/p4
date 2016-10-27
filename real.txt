@@ -1,42 +1,186 @@
-/vmlinuz
-
-/:
-bin
-boot
-cdrom
-dev
-etc
-home
-initrd.img
-initrd.img.old
-lib
-lib64
-lost+found
-media
-mnt
-opt
-proc
-root
-run
-sbin
-snap
-srv
-sys
-tmp
-usr
-var
-vmlinuz
-vmlinuz.old
-
-/home/billy/Documents/:
-cse303
-
-/home/billy/Documents/cse303/:
-Backup
-cse303.p3
-cse303p4
-cse303.p4
-iNodeAccess.txt
-iNode.c
-p4
-p4b
+/home/billy/Scripts/dev/adoptdir.c:  //TODO
+/home/billy/Scripts/dev/adoptdir.c:  //TODO
+/home/billy/Scripts/dev/adoptdir.c:  //TODO
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/544896921A8F795FB262E5E255340E26C4FF61D9:    // TODO :: make the prefixes more granular
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/544896921A8F795FB262E5E255340E26C4FF61D9:    // TODO :: Add flag for hasownprop ? didn't last time
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/544896921A8F795FB262E5E255340E26C4FF61D9:    // TODO :: add testDOMProps
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F:        //TODO set height
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F:        //TODO important
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F:// TODO: timecodeTo/FromString should not be on VASTCreative - useful elsewhere
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F: * TODO: Add interface for reporting errors, possibly also "rejecting" the ad
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F: * TODO: Add support for <Icons> as dictated by the standard
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F: * TODO: Add method for tracking impression without tracking creative view
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F: * TODO: In VAST 2.0, this should return any next ad, not just based on seq
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F: * TODO: Add support for getting adParameters and duration (for Linears)
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F:    // TODO: attributes should be merged when augmented
+/home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/A9F607A4991F4C0233F85988240D793AD95B7D9F:    this.scrubber.style.left = this.config.volume * -61 +"px";//TODO set it by volume param
+Binary file /home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/79CD21A4F8F0E5D887EF0D86E87FAC7A0E5EBAB8 matches
+Binary file /home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/1D439C34E50CCC7A69ADBE7A6D86BA979315A881 matches
+Binary file /home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/0F878FEDAD48ECC5F26424EDB2825040A743237A matches
+Binary file /home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/97039532F3711106DA31AB809BCDBCF613961D47 matches
+Binary file /home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/6C56C2D0BC33A08D612EA9EB936B67C0E18F81F6 matches
+Binary file /home/billy/.cache/mozilla/firefox/fqhi9941.default/cache2/entries/25585F9594B1D0BDAE8F07C19C8EAE00C34FBF43 matches
+Binary file /home/billy/.cache/netbeans/8.1/all-resources.dat matches
+/home/billy/.config/google-chrome/Default/Extensions/gighmmpiobklfepjocnamgkkbiglidom/3.4.0_0/adblock-uiscripts-blacklisting-blacklistui.js:// TODO: same event framework as ClickWatcher
+/home/billy/.config/google-chrome/Default/Extensions/gighmmpiobklfepjocnamgkkbiglidom/3.4.0_0/adblock-stats.js:        success : handlePingResponse, // TODO: Remove when we no longer do a/b
+/home/billy/.config/google-chrome/Default/Extensions/gighmmpiobklfepjocnamgkkbiglidom/3.4.0_0/adblock-data-migrate.js:  // TODO:  When this module is removed in a future release,
+/home/billy/.config/google-chrome/Default/Extensions/gighmmpiobklfepjocnamgkkbiglidom/3.4.0_0/adblock-option-general.js:    var name = this.id.substring(7); // TODO: hack
+/home/billy/.config/google-chrome/Default/Extensions/gighmmpiobklfepjocnamgkkbiglidom/3.4.0_0/adblock-bandaids.js:                // TODO: handle this background page call
+/home/billy/.config/google-chrome/Default/Extensions/gighmmpiobklfepjocnamgkkbiglidom/3.4.0_0/adblock-background.js:// TODO
+/home/billy/.config/google-chrome/Default/Extensions/pkedcjkdefgpdelpbcmbmeomcjbeemfm/5416.905.0.6_0/cast_route_details.html:        /* TODO(noms): Figure out why leaving the width at 133% before the animation
+/home/billy/.config/google-chrome/Default/Extensions/nmmhkkegccagdldgiimedpiccmgmieda/1.0.0.0_0/craw_background.js:EXIT:"exit",LOADABORT:"loadabort",LOADCOMMIT:"loadcommit",LOADREDIRECT:"loadredirect",LOADSTART:"loadstart",LOADSTOP:"loadstop",RESPONSIVE:"responsive",SIZECHANGED:"sizechanged",UNRESPONSIVE:"unresponsive",VISIBILITYCHANGE:"visibilitychange",STORAGE:"storage",DOMSUBTREEMODIFIED:"DOMSubtreeModified",DOMNODEINSERTED:"DOMNodeInserted",DOMNODEREMOVED:"DOMNodeRemoved",DOMNODEREMOVEDFROMDOCUMENT:"DOMNodeRemovedFromDocument",DOMNODEINSERTEDINTODOCUMENT:"DOMNodeInsertedIntoDocument",DOMATTRMODIFIED:"DOMAttrModified",
+/home/billy/.config/google-chrome/Default/Extensions/nmmhkkegccagdldgiimedpiccmgmieda/1.0.0.0_0/craw_window.js:EXIT:"exit",LOADABORT:"loadabort",LOADCOMMIT:"loadcommit",LOADREDIRECT:"loadredirect",LOADSTART:"loadstart",LOADSTOP:"loadstop",RESPONSIVE:"responsive",SIZECHANGED:"sizechanged",UNRESPONSIVE:"unresponsive",VISIBILITYCHANGE:"visibilitychange",STORAGE:"storage",DOMSUBTREEMODIFIED:"DOMSubtreeModified",DOMNODEINSERTED:"DOMNodeInserted",DOMNODEREMOVED:"DOMNodeRemoved",DOMNODEREMOVEDFROMDOCUMENT:"DOMNodeRemovedFromDocument",DOMNODEINSERTEDINTODOCUMENT:"DOMNodeInsertedIntoDocument",DOMATTRMODIFIED:"DOMAttrModified",
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/part1b.c:    /* TODO: complete this function */
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/mysort.c:    /* TODO: parse the arguments correctly */
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/mysort.c:    /* TODO: fix this invocation */
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/libpart3.c:/* TODO: Your code goes here */
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/libpart2.c:/* TODO: Your code goes here */
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/libexploit.c:    /* TODO: output the contents of the evil file */
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/part1a.c:    /* TODO: execute the new function "ucase" that you added to libpart1.c */
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/mylist.c:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/mytail.c~:    /* TODO: parse the arguments correctly */
+/home/billy/Programs/cse303/project3/7equals0/cse303.p3/mytail.c~:    /* TODO: fix this invocation */
+/home/billy/Programs/cse303/project3/7equals0/mylist.c:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/myhead.c~:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mysort.c:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mysort.c:    /* TODO: parse the arguments correctly */
+/home/billy/Programs/cse303/project3/p1/mysort.c:    /* TODO: fix this invocation */
+/home/billy/Programs/cse303/project3/p1/myhostname.c~:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mygrep.c:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mygrep.c:    /* TODO: fix this invocation */
+/home/billy/Programs/cse303/project3/p1/mywc.c:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/myalive.c:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mysed.c~:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mysed.c~:  char * replacement = "TODO";
+/home/billy/Programs/cse303/project3/p1/mysed.c~:    /* TODO: fix this invocation */
+Binary file /home/billy/Programs/cse303/project3/p1/obj64/mysed matches
+Binary file /home/billy/Programs/cse303/project3/p1/obj64/mysed.o matches
+/home/billy/Programs/cse303/project3/p1/mysed.c:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mysed.c:  char * replacement = "TODO";
+/home/billy/Programs/cse303/project3/p1/mysed.c:    /* TODO: fix this invocation */
+/home/billy/Programs/cse303/project3/p1/mywc.c~:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/myhead.c:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mygrep.c~:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mygrep.c~:    /* TODO: fix this invocation */
+/home/billy/Programs/cse303/project3/p1/mylist.c~:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mysort.c~:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mysort.c~:    /* TODO: parse the arguments correctly */
+/home/billy/Programs/cse303/project3/p1/mysort.c~:    /* TODO: fix this invocation */
+/home/billy/Programs/cse303/project3/p1/mytail.c:  /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mytail.c:    /* TODO: parse the arguments correctly */
+/home/billy/Programs/cse303/project3/p1/mytail.c:    /* TODO: fix this invocation */
+/home/billy/Programs/cse303/project3/p1/myalive.c~:    /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mytail.c~:  /* TODO: Complete this function */
+/home/billy/Programs/cse303/project3/p1/mytail.c~:    /* TODO: parse the arguments correctly */
+/home/billy/Programs/cse303/project3/p1/mytail.c~:    /* TODO: fix this invocation */
+/home/billy/Programs/cse303/project3/p1/myhostname.c:    /* TODO: Complete this function */
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/iconv-lite/lib/extend-node.js:            // TODO: Set _charsWritten.
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/iconv-lite/encodings/dbcs-codec.js:                    // TODO: What if we have no default? (resCode == undefined)
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/iconv-lite/encodings/dbcs-codec.js:            // TODO: Callback with seq.
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/iconv-lite/encodings/dbcs-data.js:    // TODO: KDDI extension to Shift_JIS
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/iconv-lite/encodings/dbcs-data.js:    // TODO: IBM CCSID 942 = CP932, but F0-F9 custom chars and other char changes.
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/iconv-lite/encodings/dbcs-data.js:    // TODO: IBM CCSID 943 = Shift_JIS = CP932 with original Shift_JIS lower 128 chars.
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/iconv-lite/encodings/dbcs-data.js:    // TODO: Euro = 0x80 in cp936, but not in GBK (where it's valid but undefined)
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/iconv-lite/encodings/dbcs-data.js:    // TODO: Support GB18030 (~27000 chars + whole unicode mapping, cp54936)
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/child-process-promise/node_modules/q/q.js:            // TODO: "===" should be Object.is or equiv
+/home/billy/.vscode/extensions/austin.code-gnu-global-0.2.1/node_modules/child-process-promise/node_modules/q/q.js:        // TODO attempt to recycle the rejection with "this".
+Binary file /home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/debugAdapters/framework/System.dll matches
+Binary file /home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/debugAdapters/framework/System.Configuration.dll matches
+Binary file /home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/debugAdapters/framework/System.Xml.Linq.dll matches
+Binary file /home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/debugAdapters/framework/System.Security.dll matches
+Binary file /home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/debugAdapters/framework/System.Core.dll matches
+Binary file /home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/debugAdapters/framework/mscorlib.dll matches
+Binary file /home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/debugAdapters/framework/Microsoft.CSharp.dll matches
+/home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/node_modules/yauzl/index.js:          // TODO: the inflateFilter now causes a memory leak. see Issue #27.
+/home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/node_modules/https-proxy-agent/node_modules/debug/browser.js: * TODO: add a `localStorage` variable to explicitly enable/disable colors
+/home/billy/.vscode/extensions/ms-vscode.cpptools-0.9.2/node_modules/http-proxy-agent/node_modules/debug/browser.js: * TODO: add a `localStorage` variable to explicitly enable/disable colors
+/home/billy/.local/share/Trash/files/myls.c:    /* TODO: Complete this function */
+/home/billy/.local/share/Trash/files/myls.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/.local/share/Trash/files/myls.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/cse303.p3/part1b.c:    /* TODO: complete this function */
+/home/billy/Documents/cse303/cse303.p3/libpart3.c:/* TODO: Your code goes here */
+/home/billy/Documents/cse303/cse303.p3/libpart2.c:/* TODO: Your code goes here */
+/home/billy/Documents/cse303/cse303.p3/libexploit.c:    /* TODO: output the contents of the evil file */
+/home/billy/Documents/cse303/cse303.p3/libpart4.c:/* TODO: Your code goes here */
+/home/billy/Documents/cse303/cse303.p3/part1a.c:    /* TODO: execute the new function "ucase" that you added to libpart1.c */
+/home/billy/Documents/cse303/cse303.p3/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303.p3/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303.p3/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303.p3/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303p4/part1b.c:    /* TODO: complete this function */
+/home/billy/Documents/cse303/cse303p4/libpart3.c:/* TODO: Your code goes here */
+/home/billy/Documents/cse303/cse303p4/libpart2.c:/* TODO: Your code goes here */
+/home/billy/Documents/cse303/cse303p4/libexploit.c:    /* TODO: output the contents of the evil file */
+/home/billy/Documents/cse303/cse303p4/libpart4.c:/* TODO: Your code goes here */
+/home/billy/Documents/cse303/cse303p4/part1a.c:    /* TODO: execute the new function "ucase" that you added to libpart1.c */
+/home/billy/Documents/cse303/cse303p4/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303p4/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303p4/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303p4/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/p4/myrgrep.c:    /* TODO: make sure to handle any other arguments specified by the */
+/home/billy/Documents/cse303/p4/myrgrep.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4/mygrep.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/p4/mygrep.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4/mylsr.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/p4/mylsr.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4/mylsa.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/p4/mylsa.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4/myls.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/p4/myls.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4/mylsl.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/p4/mylsl.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/Backup/myrgrep.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/Backup/myrgrep.c:    /* TODO: make sure to handle any other arguments specified by the */
+/home/billy/Documents/cse303/Backup/myrgrep.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/Backup/mylsr.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/Backup/mylsr.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/Backup/mylsr.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/Backup/mylsa.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/Backup/mylsa.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/Backup/mylsa.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/Backup/myls.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/Backup/myls.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/Backup/myls.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/Backup/mylsl.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/Backup/mylsl.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/Backup/mylsl.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4b/myrgrep.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/p4b/myrgrep.c:    /* TODO: make sure to handle any other arguments specified by the */
+/home/billy/Documents/cse303/p4b/myrgrep.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4b/mylsr.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/p4b/mylsr.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/p4b/mylsr.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4b/mylsa.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/p4b/mylsa.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/p4b/mylsa.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4b/myls.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/p4b/myls.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/p4b/myls.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/p4b/mylsl.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/p4b/mylsl.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/p4b/mylsl.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/cse303.p4/part1b.c:    /* TODO: complete this function */
+/home/billy/Documents/cse303/cse303.p4/myrgrep.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/cse303.p4/myrgrep.c:    /* TODO: make sure to handle any other arguments specified by the */
+/home/billy/Documents/cse303/cse303.p4/myrgrep.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/cse303.p4/libpart3.c:/* TODO: Your code goes here */
+/home/billy/Documents/cse303/cse303.p4/libpart2.c:/* TODO: Your code goes here */
+/home/billy/Documents/cse303/cse303.p4/libexploit.c:    /* TODO: output the contents of the evil file */
+/home/billy/Documents/cse303/cse303.p4/libpart4.c:/* TODO: Your code goes here */
+/home/billy/Documents/cse303/cse303.p4/part1a.c:    /* TODO: execute the new function "ucase" that you added to libpart1.c */
+/home/billy/Documents/cse303/cse303.p4/mylsr.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/cse303.p4/mylsr.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/cse303.p4/mylsr.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/cse303.p4/mylsa.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/cse303.p4/mylsa.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/cse303.p4/mylsa.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/cse303.p4/myls.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/cse303.p4/myls.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/cse303.p4/myls.c:    /* TODO: fix this invocation */
+/home/billy/Documents/cse303/cse303.p4/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303.p4/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303.p4/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303.p4/list.c:  /* TODO: complete this code */
+/home/billy/Documents/cse303/cse303.p4/mylsl.c:    /* TODO: Complete this function */
+/home/billy/Documents/cse303/cse303.p4/mylsl.c:    /* TODO: make sure to handle any other arguments specified by the assignment */
+/home/billy/Documents/cse303/cse303.p4/mylsl.c:    /* TODO: fix this invocation */
