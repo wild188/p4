@@ -233,21 +233,18 @@ void mylslHelper(char * dirName){
     char * currPath;
     char temp[1024];
     if(dirName != NULL){                   //we were given a directory so we use that one
-
-        currPath = strdup(dirName);
-        /*
-        int len = strlen(dirName);
-        currPath = malloc((len + 1)* (sizeof(char)));
-        strcpy(currPath, dirName);
-        */
-        //printf("Evaluating external directory: %s\n", currPath);
+        if(dirName[strlen(dirName) - 1] == '/'){
+            currPath = strdup(dirName);
+        }else{
+            currPath = malloc((strlen(dirName) + 2) * sizeof(char));
+            currPath[0] = '\0';
+            strcat(currPath, dirName);
+            strcat(currPath, "/");
+        }
     }else if(getcwd(temp, sizeof(temp))){   //we werent given a directory so we default to the current dir
         currPath = malloc((strlen(temp) + 2) * sizeof(char));
         strcpy(currPath, temp);
         strcat(currPath, "/");
-        //currPath = strdup(temp);
-        //printf("%s\n", currPath);
-        //printf("Current Path: %s\n", currPath);
     }else{                                  //we are unable to get the path ERROR
         printf("Path error!\n");
         exit(1);
@@ -288,7 +285,7 @@ void mylslHelper(char * dirName){
         if(errno == ENOTDIR){       //if we are given a file
             printf("%s\n", currPath);
         }else{                      //unable to open the directory ERROR
-            printf("Problem openning directory.\n");
+            printf("Problem openning directory %s.\n", currPath);
             exit(1);
         }
         
