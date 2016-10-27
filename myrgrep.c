@@ -23,6 +23,7 @@ int grep_file(char *filename, char *searchstr) {
   //printf("grepping %s for %s\n", filename ,searchstr);
   FILE *file = fopen(filename, "r");
   if(!file){
+      printf("Cannot open %s\n", filename);
     return 0;
   }
 
