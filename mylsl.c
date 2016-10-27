@@ -21,8 +21,47 @@ char ** curFiles;
 int numCurFiles;
 char * currentPath;
 
+char * fileTypeChar(struct stat file){
+    char * type;
+    if(S_ISREG(file.st_mode)){
+        type = "-";
+    }else if(file.st_mode & S_IFBLK){
+        type = "b";
+    }else if(file.st_mode & S_IFCHR){
+        type = "c";
+    }else if(file.st_mode & 0){
+        type = "C";
+    }else if(S_ISDIR(file.st_mode)){
+        type = "d";
+    }else if(file.st_mode & 0){
+        type = "D";
+    }else if(file.st_mode & S_IFLNK){
+        type = "l";
+    }else if(file.st_mode & 0){
+        type = "M";
+    }else if(file.st_mode & 0){
+        type = "n";
+    }else if(file.st_mode & S_IFIFO){
+        type = "p";
+    }else if(file.st_mode & 0){
+        type = "P";
+    }else if(file.st_mode & S_IFSOCK){
+        type = "s";
+    }else{
+        type = "?";
+    }
+    return type;
+}
+
 void print(){
     int i;
+
+    char * (contents[numCurFiles][7]);
+    int space[7]; 
+    for(i = 0; i < 7; i++){
+        space[i] = 0;
+    }
+    int totalLinks = 0;
     
     for(i = 0; i < numCurFiles; i++){
         struct stat fileInfo;
@@ -31,8 +70,9 @@ void print(){
         strcat(filePath, currentPath);
         strcat(filePath, curFiles[i]);
         if(stat(filePath, &fileInfo) >= 0){
-            char permissions[10];
+            char permissions[11];
             permissions[0]= '\0';
+            strcat(permissions, fileTypeChar(fileInfo));
             strcat(permissions, (fileInfo.st_mode & S_IRUSR) ? "r" : "-");
             strcat(permissions, (fileInfo.st_mode & S_IWUSR) ? "w" : "-");
             strcat(permissions, (fileInfo.st_mode & S_IXUSR) ? "x" : "-");
@@ -66,23 +106,54 @@ void print(){
             struct tm * locModTime = localtime(&rawModTime);
             char modTime[13];
             strftime(modTime, 13, "%b %d %H:%M", locModTime); 
+            char buffer[1024];
+            buffer[0] = '\0';
+            contents[i][0] = strdup(permissions);
+            sprintf(buffer, "%d", hardLinks);
+            totalLinks += hardLinks;
+            contents[i][1] = strdup(buffer);
+            contents[i][2] = strdup(ownerName);
+            contents[i][3] = strdup(groupName);
+            buffer[0] = '\0';
+            sprintf(buffer, "%ld", fileSize);
+            contents[i][4] = strdup(buffer);
+            contents[i][5] = strdup(modTime);
 
-            printf("%s. %3u %s %s %*ld %s ", permissions, hardLinks, ownerName, groupName, 5, fileSize, modTime);
-            
+            //printf("%s. %3u %s %s %*ld %s ", permissions, hardLinks, ownerName, groupName, 5, fileSize, modTime);
+            buffer[0] = '\0';
 
             if(S_ISDIR(fileInfo.st_mode)){
-                printf("%s/\n", curFiles[i]);
+                sprintf(buffer, "%s/", curFiles[i]);
             }else if(fileInfo.st_mode & S_IXUSR){
-                printf("%s*\n", curFiles[i]);
+                sprintf(buffer, "%s*", curFiles[i]);
             }else{
-                printf("%s\n", curFiles[i]);
+                sprintf(buffer, "%s", curFiles[i]);
             }
+            //printf("%s\n", buffer);
+            contents[i][6] = strdup(buffer);
+            int k;
+            for(k = 0; k < 7; k++){
+                if(strlen(contents[i][k]) > space[k]){
+                    space[k] = strlen(contents[i][k]);
+                }
+            }
+
         }else{
             //printf("%s\n", filePath);
             perror("Failed to stat file\n");
         }
         
     }
+
+    int h;
+    for(h = 0; h < 7; h++){
+        //space[h]++;
+    }
+    printf("total %i\n", totalLinks);
+    for(h = 0; h < numCurFiles; h++){
+        printf("%s. %*s %*s %*s %*s %*s %s\n", contents[h][0], space[1], contents[h][1], space[2], contents[h][2], space[3], contents[h][3], space[4], contents[h][4], space[5], contents[h][5], contents[h][6]);
+    }
+    return;
 }
 
 //used to alphabatize teh files
@@ -134,8 +205,7 @@ static int myCompare(const void * word1, const void * word2){
     //the words are alphabetically the same
     return 0;
 
-    //int result = strcmp((* (char * const *)(word1)), (* (char * const *)(word2)));
-    //return result;
+   
 }
 
 void mylslHelper(char * dirName){
