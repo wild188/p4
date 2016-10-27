@@ -120,7 +120,7 @@ void print(){
 
             blockSize = fileInfo.st_blksize;
             totalSize += fileSize;
-            
+            totalBlocks += fileInfo.st_blocks;
 
             sprintf(buffer, "%ld", fileSize);
             contents[i][4] = strdup(buffer);
@@ -133,10 +133,10 @@ void print(){
                 sprintf(buffer, "%s/", curFiles[i]);
             }else if(fileInfo.st_mode & S_IXUSR){
                 sprintf(buffer, "%s*", curFiles[i]);
-                totalBlocks += fileInfo.st_blocks;
+                //totalBlocks += fileInfo.st_blocks;
             }else{
                 sprintf(buffer, "%s", curFiles[i]);
-                totalBlocks += fileInfo.st_blocks;                     
+                //totalBlocks += fileInfo.st_blocks;                     
             }
             //printf("%s\n", buffer);
             contents[i][6] = strdup(buffer);
