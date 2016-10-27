@@ -383,5 +383,6 @@ int main(int argc, char **argv) {
    if(argc == 3){
         searchString = strdup(argv[1]);
         myrgrepHelper(argv[2]);
+        free(searchString);
    }
 }

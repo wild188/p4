@@ -23,29 +23,29 @@ char * currentPath;
 
 char * fileTypeChar(struct stat file){
     char * type;
-    if(S_ISREG(file.st_mode)){
+    if(S_ISLNK(file.st_mode)){
+        type = "l";
+    }else if(S_ISREG(file.st_mode)){
         type = "-";
-    }else if(file.st_mode & S_IFBLK){
+    }else if(S_ISDIR(file.st_mode)){
+        type = "d";
+    }else if(S_ISBLK(file.st_mode)){
         type = "b";
-    }else if(file.st_mode & S_IFCHR){
+    }else if(S_ISCHR(file.st_mode)){
         type = "c";
     }else if(file.st_mode & 0){
         type = "C";
-    }else if(S_ISDIR(file.st_mode)){
-        type = "d";
     }else if(file.st_mode & 0){
         type = "D";
-    }else if(file.st_mode & S_IFLNK){
-        type = "l";
     }else if(file.st_mode & 0){
         type = "M";
     }else if(file.st_mode & 0){
         type = "n";
-    }else if(file.st_mode & S_IFIFO){
+    }else if(S_ISFIFO(file.st_mode)){
         type = "p";
     }else if(file.st_mode & 0){
         type = "P";
-    }else if(file.st_mode & S_IFSOCK){
+    }else if(S_ISSOCK(file.st_mode)){
         type = "s";
     }else{
         type = "?";
@@ -63,7 +63,7 @@ void print(){
     }
     int totalSize = 0;
     int blockSize = 0;
-    int totalBlocks = 0;
+    long totalBlocks = 0;
     
     for(i = 0; i < numCurFiles; i++){
         struct stat fileInfo;
@@ -85,9 +85,6 @@ void print(){
             strcat(permissions, (fileInfo.st_mode & S_IWOTH) ? "w" : "-");
             strcat(permissions, (fileInfo.st_mode & S_IXOTH) ? "x" : "-");
 
-            //printf("%s. ", permissions);
-            
-            
             unsigned int hardLinks = fileInfo.st_nlink;
             
             struct passwd * ownerInfo;
@@ -104,7 +101,6 @@ void print(){
 
             time_t rawModTime = fileInfo.st_mtime;
 
-
             struct tm * locModTime = localtime(&rawModTime);
             char modTime[13];
             strftime(modTime, 13, "%b %d %H:%M", locModTime); 
@@ -120,13 +116,12 @@ void print(){
 
             blockSize = fileInfo.st_blksize;
             totalSize += fileSize;
-            totalBlocks += fileInfo.st_blocks;
+            totalBlocks += (long)fileInfo.st_blocks;
 
             sprintf(buffer, "%ld", fileSize);
             contents[i][4] = strdup(buffer);
             contents[i][5] = strdup(modTime);
 
-            //printf("%s. %3u %s %s %*ld %s ", permissions, hardLinks, ownerName, groupName, 5, fileSize, modTime);
             buffer[0] = '\0';
 
             if(S_ISDIR(fileInfo.st_mode)){
@@ -134,11 +129,22 @@ void print(){
             }else if(fileInfo.st_mode & S_IXUSR){
                 sprintf(buffer, "%s*", curFiles[i]);
                 //totalBlocks += fileInfo.st_blocks;
+            }else if(S_ISLNK(fileInfo.st_mode)){
+                struct stat realFile;
+                if(lstat(filePath, &realFile));
+                totalBlocks -= (long)fileInfo.st_blocks;
+                totalBlocks += (long)realFile.st_blocks;
+                fileSize = realFile.st_size;
+                free(contents[i][4]);
+                buffer[0] = '\0';
+                sprintf(buffer, "%ld", fileSize);
+                contents[i][4] = strdup(buffer);
+                buffer[0] = '\0';
+                sprintf(buffer, "%s ->", curFiles[i]);
             }else{
                 sprintf(buffer, "%s", curFiles[i]);
                 //totalBlocks += fileInfo.st_blocks;                     
             }
-            //printf("%s\n", buffer);
             contents[i][6] = strdup(buffer);
             int k;
             for(k = 0; k < 7; k++){
@@ -148,7 +154,6 @@ void print(){
             }
 
         }else{
-            //printf("%s\n", filePath);
             perror("Failed to stat file\n");
         }
         
@@ -158,9 +163,12 @@ void print(){
     for(h = 0; h < 7; h++){
         //space[h]++;
     }
-    printf("total %i %i * %i = %i\n", totalBlocks, totalSize / blockSize, blockSize, totalSize);
+    printf("total %ld\n", (totalBlocks / 2));
     for(h = 0; h < numCurFiles; h++){
         printf("%s. %*s %*s %*s %*s %*s %s\n", contents[h][0], space[1], contents[h][1], space[2], contents[h][2], space[3], contents[h][3], space[4], contents[h][4], space[5], contents[h][5], contents[h][6]);
+        for(i = 0; i < 7; i++){
+            free(contents[h][i]);
+        }
     }
     return;
 }
