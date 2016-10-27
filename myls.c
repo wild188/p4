@@ -106,14 +106,14 @@ void mylsHelper(char * dirName){
     char * currPath;
     char temp[1024];
     if(dirName != NULL){                   //we were given a directory so we use that one
-
-        currPath = strdup(dirName);
-        /*
-        int len = strlen(dirName);
-        currPath = malloc((len + 1)* (sizeof(char)));
-        strcpy(currPath, dirName);
-        */
-        //printf("Evaluating external directory: %s\n", currPath);
+        if(dirName[strlen(dirName) - 1] == '/'){
+            currPath = strdup(dirName);
+        }else{
+            currPath = malloc((strlen(dirName) + 2) * sizeof(char));
+            currPath[0] = '\0';
+            strcat(currPath, dirName);
+            strcat(currPath, "/");
+        }
     }else if(getcwd(temp, sizeof(temp))){   //we werent given a directory so we default to the current dir
         currPath = malloc((strlen(temp) + 2) * sizeof(char));
         strcpy(currPath, temp);

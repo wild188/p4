@@ -71,7 +71,7 @@ void print(){
         filePath[0] = '\0';
         strcat(filePath, currentPath);
         strcat(filePath, curFiles[i]);
-        if(stat(filePath, &fileInfo) >= 0){
+        if(lstat(filePath, &fileInfo) >= 0){
             char permissions[11];
             permissions[0]= '\0';
             strcat(permissions, fileTypeChar(fileInfo));
@@ -98,8 +98,10 @@ void print(){
             char * groupName;
             if(groupInfo){
                 groupName = groupInfo->gr_name;
+            }else{
+                groupName = "?";
             }
-            groupName = "?";
+            
 
             off_t fileSize = fileInfo.st_size;
 
@@ -130,9 +132,6 @@ void print(){
 
             if(S_ISDIR(fileInfo.st_mode)){
                 sprintf(buffer, "%s/", curFiles[i]);
-            }else if(fileInfo.st_mode & S_IXUSR){
-                sprintf(buffer, "%s*", curFiles[i]);
-                //totalBlocks += fileInfo.st_blocks;
             }else if(S_ISLNK(fileInfo.st_mode)){
                 struct stat realFile;
                 if(lstat(filePath, &realFile));
@@ -144,7 +143,15 @@ void print(){
                 sprintf(buffer, "%ld", fileSize);
                 contents[i][4] = strdup(buffer);
                 buffer[0] = '\0';
-                sprintf(buffer, "%s ->", curFiles[i]);
+                int targetLen = readlink(filePath, buffer, 1024);
+                buffer[targetLen] = '\0';
+                char * target=strdup(buffer);
+                buffer[0] = '\0';
+                sprintf(buffer, "%s -> %s", curFiles[i], target);
+                free(target);
+            }else if(fileInfo.st_mode & S_IXUSR){
+                sprintf(buffer, "%s*", curFiles[i]);
+                //totalBlocks += fileInfo.st_blocks;
             }else{
                 sprintf(buffer, "%s", curFiles[i]);
                 //totalBlocks += fileInfo.st_blocks;                     

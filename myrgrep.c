@@ -181,8 +181,8 @@ void myrgrepHelper(char * dirName){
             if(name == NULL){ //skips nyll names
                 continue;
             }else{
-                if(name[0] == '.'){
-                    continue; //skipping hidden entries
+                if(name[0] == '.' && (name[1] == '\0' || name[1] == '.')){
+                    continue; //skipping backtrace
                 }else{
                     numCurFiles++;
 
