@@ -61,7 +61,9 @@ void print(){
     for(i = 0; i < 7; i++){
         space[i] = 0;
     }
-    int totalLinks = 0;
+    int totalSize = 0;
+    int blockSize = 0;
+    int totalBlocks = 0;
     
     for(i = 0; i < numCurFiles; i++){
         struct stat fileInfo;
@@ -110,11 +112,16 @@ void print(){
             buffer[0] = '\0';
             contents[i][0] = strdup(permissions);
             sprintf(buffer, "%d", hardLinks);
-            totalLinks += hardLinks;
+            
             contents[i][1] = strdup(buffer);
             contents[i][2] = strdup(ownerName);
             contents[i][3] = strdup(groupName);
             buffer[0] = '\0';
+
+            blockSize = fileInfo.st_blksize;
+            totalSize += fileSize;
+            
+
             sprintf(buffer, "%ld", fileSize);
             contents[i][4] = strdup(buffer);
             contents[i][5] = strdup(modTime);
@@ -126,8 +133,10 @@ void print(){
                 sprintf(buffer, "%s/", curFiles[i]);
             }else if(fileInfo.st_mode & S_IXUSR){
                 sprintf(buffer, "%s*", curFiles[i]);
+                totalBlocks += fileInfo.st_blocks;
             }else{
                 sprintf(buffer, "%s", curFiles[i]);
+                totalBlocks += fileInfo.st_blocks;                     
             }
             //printf("%s\n", buffer);
             contents[i][6] = strdup(buffer);
@@ -149,7 +158,7 @@ void print(){
     for(h = 0; h < 7; h++){
         //space[h]++;
     }
-    printf("total %i\n", totalLinks);
+    printf("total %i %i * %i = %i\n", totalBlocks, totalSize / blockSize, blockSize, totalSize);
     for(h = 0; h < numCurFiles; h++){
         printf("%s. %*s %*s %*s %*s %*s %s\n", contents[h][0], space[1], contents[h][1], space[2], contents[h][2], space[3], contents[h][3], space[4], contents[h][4], space[5], contents[h][5], contents[h][6]);
     }
