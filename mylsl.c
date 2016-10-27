@@ -95,7 +95,11 @@ void print(){
             struct group * groupInfo;
             gid_t groupOwnerID = fileInfo.st_gid;
             groupInfo = getgrgid(groupOwnerID);
-            char * groupName = groupInfo->gr_name;
+            char * groupName;
+            if(groupInfo){
+                groupName = groupInfo->gr_name;
+            }
+            groupName = "?";
 
             off_t fileSize = fileInfo.st_size;
 
