@@ -109,7 +109,7 @@ void mylsHelper(char * dirName){
         strcpy(currPath, temp);
         strcat(currPath, "/");
     }else{                                  //we are unable to get the path ERROR
-        printf("Path error!\n");
+        perror("Path error!\n");
         exit(1);
     }
     currentPath = strdup(currPath);
@@ -145,7 +145,7 @@ void mylsHelper(char * dirName){
         if(errno == ENOTDIR){       //if we are given a file
             printf("%s\n", currPath);
         }else{                      //unable to open the directory ERROR
-            printf("Problem openning directory.\n");
+            perror("Problem openning directory.\n");
             exit(1);
         }
         
@@ -194,7 +194,7 @@ void myls(char **roots, int num) {
                 numFiles++;
             }
         }else{ //might need to change to be a dynamic error statement incluse permission denied
-            printf("ls: cannot access %s: No such file or directory\n", roots[i]);
+            fprintf(stderr, "ls: cannot access %s: No such file or directory\n", roots[i]);
         }
     }
     qsort(files, numFiles, sizeof(char *), myCompare);

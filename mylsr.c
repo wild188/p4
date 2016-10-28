@@ -38,7 +38,7 @@ void print(char ** curFiles, int numCurFiles, char * currentPath){
                 printf("%s\n", curFiles[i]);
             }
         }else{
-            printf("%s\n", filePath);
+            //printf("%s\n", filePath);
             perror("Failed to stat file\n");
         }
         
@@ -168,7 +168,7 @@ void mylsrHelper(char * dirName){
         if(errno == ENOTDIR){       //if we are given a file
             printf("%s\n", currPath);
         }else{                      //unable to open the directory ERROR
-            printf("Problem openning directory.\n");
+            perror("Problem openning directory.\n");
             return;
         }
         
@@ -202,22 +202,6 @@ void mylsrHelper(char * dirName){
     free(currPath);
     free(subDirs);
 }
-
-/*
-void subdir(char ** curFiles, int numCurFiles, char * currentPath){
-    int i;
-    for(i = 0; i < numCurFiles; i++){
-        DIR* subdir;
-        if((subdir = opendir(curFiles[i])) != NULL){
-            closedir(subdir);
-            prefix = malloc(strlen(curFiles[i]) * sizeof(char));
-            //prefix 
-            printf("\n");
-            mylsrHelper(curFiles[i]);
-        }
-    }
-}
-*/
 
 //takes in all arguments and calls an ls on each default is current directory
 void mylsr(char **roots, int num) { 
@@ -254,7 +238,7 @@ void mylsr(char **roots, int num) {
                 numFiles++;
             }
         }else{
-            printf("ls: cannot access %s: No such file or directory\n", roots[i]);
+            fprintf(stderr, "ls: cannot access %s: No such file or directory\n", roots[i]);
         }
     }
     

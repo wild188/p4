@@ -21,7 +21,7 @@ int root;
 int grep_file(char *filename, char *searchstr) {
   FILE *file = fopen(filename, "r");
   if(!file){
-      printf("Cannot open %s\n", filename);
+      fprintf(stderr, "Cannot open %s\n", filename);
     return 0;
   }
 
@@ -54,7 +54,7 @@ void print(char ** curFiles, int numCurFiles, char * currentPath){
             }
             printf("%s\n", filePath);
         }else{
-            printf("%s\n", filePath);
+            //printf("%s\n", filePath);
             perror("Failed to stat file\n");
         }
         
@@ -188,9 +188,12 @@ void myrgrepHelper(char * dirName){
         closedir(myDir);
     }else{
         if(errno == ENOTDIR){       //if we are given a file
-            printf("%s\n", currPath);
+            if(grep_file(currPath, searchString)){
+                printf("%s\n", currPath);
+            }
+            return;
         }else{                      //unable to open the directory ERROR
-            printf("Problem openning directory.\n");
+            perror("Problem openning directory.\n");
             return;
         }
         
@@ -280,7 +283,7 @@ void myrgrep(char **roots, int num) {
                 numFiles++;
             }
         }else{
-            printf("ls: cannot access %s: No such file or directory\n", roots[i]);
+            fprintf(stderr, "ls: cannot access %s: No such file or directory\n", roots[i]);
         }
     }
     

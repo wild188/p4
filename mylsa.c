@@ -46,6 +46,13 @@ static int myCompare(const void * word1, const void * word2){
     //converting the void pointers to char stars
     char * w1 = *(char * const *)(word1);
     char * w2 = *(char * const *)(word2);
+
+    if(!strcmp(w1, ".")){
+        return -11;
+    }else if(!strcmp(w2, ".")){
+        return 1;
+    }
+
     //incremental variables
     char a, b;
     int i = 0;
@@ -80,7 +87,7 @@ static int myCompare(const void * word1, const void * word2){
     if(w2[h]){
         return -w2[h];
     }
-    printf("compare returning 0\n");
+    //printf("compare returning 0\n");
     //the words are alphabetically the same
     return 0;
 }
@@ -103,7 +110,7 @@ void mylsaHelper(char * dirName){
         strcpy(currPath, temp);
         strcat(currPath, "/");
     }else{                                  //we are unable to get the path ERROR
-        printf("Path error!\n");
+        perror("Path error!\n");
         exit(1);
     }
     currentPath = strdup(currPath);
@@ -135,7 +142,7 @@ void mylsaHelper(char * dirName){
         if(errno == ENOTDIR){       //if we are given a file
             printf("%s\n", currPath);
         }else{                      //unable to open the directory ERROR
-            printf("Problem openning directory.\n");
+            fprintf(stderr, "Problem openning directory: %s.\n", currPath);
             exit(1);
         }
     }
@@ -184,7 +191,7 @@ void mylsa(char **roots, int num) {
                 numFiles++;
             }
         }else{
-            printf("ls: cannot access %s: No such file or directory\n", roots[i]);
+            fprintf(stderr, "ls: cannot access %s: No such file or directory\n", roots[i]);
         }
     }
     
