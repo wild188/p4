@@ -60,7 +60,6 @@ static int myCompare(const void * word1, const void * word2){
     while(w1[i] && w2[h]){
         a = w1[i];
         b = w2[h];
-        
         //ignore non alphanumeric characters
         if(!isalnum(a)){
             i++;
@@ -70,11 +69,9 @@ static int myCompare(const void * word1, const void * word2){
             h++;
             continue;
         }
-
         //puts all characters to lower case
         a = tolower(a);
         b = tolower(b);
-        
         //if characters are not equal return the difference
         if(a != b){
             return (a - b);
@@ -82,7 +79,6 @@ static int myCompare(const void * word1, const void * word2){
         i++;
         h++;
     }
-
     //return negative or possitive if one word is longer
     if(w1[i]){
         return w1[i];
@@ -90,18 +86,12 @@ static int myCompare(const void * word1, const void * word2){
     if(w2[h]){
         return -w2[h];
     }
-    printf("compare returning 0\n");
+    //printf("compare returning 0\n");
     //the words are alphabetically the same
     return 0;
-
-    //int result = strcmp((* (char * const *)(word1)), (* (char * const *)(word2)));
-    //return result;
 }
 
 void mylsHelper(char * dirName){
-
-    //printf("entering old myls\n");
-
     //getting the path to the directory we will analyze
     char * currPath;
     char temp[1024];
@@ -118,9 +108,6 @@ void mylsHelper(char * dirName){
         currPath = malloc((strlen(temp) + 2) * sizeof(char));
         strcpy(currPath, temp);
         strcat(currPath, "/");
-        //currPath = strdup(temp);
-        //printf("%s\n", currPath);
-        //printf("Current Path: %s\n", currPath);
     }else{                                  //we are unable to get the path ERROR
         printf("Path error!\n");
         exit(1);
@@ -134,7 +121,6 @@ void mylsHelper(char * dirName){
     numCurFiles = 0;
 
     if((myDir = opendir(currPath)) != NULL){
-        //perror("oppened directory \n");
         while((entry = readdir(myDir)) != NULL){
             char * name = entry->d_name; //gets the file name
             if(name == NULL){ //skips nyll names
@@ -144,13 +130,11 @@ void mylsHelper(char * dirName){
                     continue; //skipping hidden entries
                 }else{
                     numCurFiles++;
-
                     //increments file buffer if we excede 1024 files
                     if(numCurFiles > (1024 * buffinc)){
                         curFiles = realloc(curFiles, ((numCurFiles + 1024) * sizeof(char *)));
                         buffinc++;
                     }
-
                     //stores the name of the file in the file list
                     curFiles[numCurFiles -1] = strdup(name);
                 }
@@ -166,8 +150,6 @@ void mylsHelper(char * dirName){
         }
         
     }
-    
-
     qsort(curFiles, numCurFiles, sizeof(char *), myCompare);
     print();
     int i;
@@ -181,12 +163,10 @@ void mylsHelper(char * dirName){
 
 //takes in all arguments and calls an ls on each default is current directory
 void myls(char **roots, int num) { 
- 
     if(num == 0){
         mylsHelper(NULL);
         return;
     }   
-
     int i;
     char ** files = malloc(1024 *sizeof(char *));
     int numFiles = 0;
@@ -213,11 +193,10 @@ void myls(char **roots, int num) {
                 files[numFiles] = strdup(roots[i]);
                 numFiles++;
             }
-        }else{
+        }else{ //might need to change to be a dynamic error statement incluse permission denied
             printf("ls: cannot access %s: No such file or directory\n", roots[i]);
         }
     }
-    
     qsort(files, numFiles, sizeof(char *), myCompare);
     for(i = 0; i < numFiles; i++){
         mylsHelper(files[i]);
@@ -274,7 +253,6 @@ int main(int argc, char **argv) {
     }
 
     /* TODO: fix this invocation */
-
     if(argc > 1){
         myls(++argv, --argc);
     }else{

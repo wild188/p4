@@ -102,7 +102,6 @@ void print(){
                 groupName = "?";
             }
             
-
             off_t fileSize = fileInfo.st_size;
 
             time_t rawModTime = fileInfo.st_mtime;
@@ -151,10 +150,8 @@ void print(){
                 free(target);
             }else if(fileInfo.st_mode & S_IXUSR){
                 sprintf(buffer, "%s*", curFiles[i]);
-                //totalBlocks += fileInfo.st_blocks;
             }else{
-                sprintf(buffer, "%s", curFiles[i]);
-                //totalBlocks += fileInfo.st_blocks;                     
+                sprintf(buffer, "%s", curFiles[i]);                    
             }
             contents[i][6] = strdup(buffer);
             int k;
@@ -167,7 +164,6 @@ void print(){
         }else{
             perror("Failed to stat file\n");
         }
-        
     }
 
     int h;
@@ -237,9 +233,6 @@ static int myCompare(const void * word1, const void * word2){
 }
 
 void mylslHelper(char * dirName){
-
-    //printf("entering old myls\n");
-
     //getting the path to the directory we will analyze
     char * currPath;
     char temp[1024];
@@ -269,7 +262,6 @@ void mylslHelper(char * dirName){
     numCurFiles = 0;
 
     if((myDir = opendir(currPath)) != NULL){
-        //perror("oppened directory \n");
         while((entry = readdir(myDir)) != NULL){
             char * name = entry->d_name; //gets the file name
             if(name == NULL){ //skips nyll names
@@ -279,13 +271,11 @@ void mylslHelper(char * dirName){
                     continue; //skipping hidden entries
                 }else{
                     numCurFiles++;
-
                     //increments file buffer if we excede 1024 files
                     if(numCurFiles > (1024 * buffinc)){
                         curFiles = realloc(curFiles, ((numCurFiles + 1024) * sizeof(char *)));
                         buffinc++;
                     }
-
                     //stores the name of the file in the file list
                     curFiles[numCurFiles -1] = strdup(name);
                 }
@@ -302,7 +292,6 @@ void mylslHelper(char * dirName){
         
     }
     
-
     qsort(curFiles, numCurFiles, sizeof(char *), myCompare);
     print();
     int i;
@@ -316,7 +305,6 @@ void mylslHelper(char * dirName){
 
 //takes in all arguments and calls an ls on each default is current directory
 void mylsl(char **roots, int num) { 
- 
     if(num == 0){
         mylslHelper(NULL);
         return;
@@ -410,7 +398,7 @@ int main(int argc, char **argv) {
     }
 
     /* TODO: fix this invocation */
-        if(argc > 1){
+    if(argc > 1){
         mylsl(++argv, --argc);
     }else{
          mylsl(NULL, 0);

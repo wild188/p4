@@ -14,19 +14,11 @@
 /*
  * mylsr() - produce the appropriate directory listing(s)
  */
-
-
-
-//char ** curFiles;
-//int numCurFiles;
-//char * currentPath;
-
 char * prefix;
 int root;
 
 void print(char ** curFiles, int numCurFiles, char * currentPath){
     int i;
-    
     for(i = 0; i < numCurFiles; i++){
         struct stat fileInfo;
         char filePath[1024];
@@ -58,17 +50,14 @@ static int myCompare(const void * word1, const void * word2){
     //converting the void pointers to char stars
     char * w1 = *(char * const *)(word1);
     char * w2 = *(char * const *)(word2);
-
     //incremental variables
     char a, b;
     int i = 0;
     int h = 0;
-
     //compares each charachter from beginning to end unless unequal
     while(w1[i] && w2[h]){
         a = w1[i];
         b = w2[h];
-        
         //ignore non alphanumeric characters
         if(!isalnum(a)){
             i++;
@@ -98,19 +87,12 @@ static int myCompare(const void * word1, const void * word2){
     if(w2[h]){
         return -w2[h];
     }
-    //printf("compare returning 0\n");
     //the words are alphabetically the same
     return 0;
-
-    //int result = strcmp((* (char * const *)(word1)), (* (char * const *)(word2)));
-    //return result;
 }
 
 
 void mylsrHelper(char * dirName){
-
-    //printf("entering old myls\n");
-
     //getting the path to the directory we will analyze
     char * currPath;
     char temp[1024];
@@ -119,29 +101,14 @@ void mylsrHelper(char * dirName){
     if(dirName != NULL){                   //we were given a directory so we use that one
 
         currPath = strdup(dirName);
-        /*
-        int len = strlen(dirName);
-        currPath = malloc((len + 1)* (sizeof(char)));
-        strcpy(currPath, dirName);
-        */
-        //printf("Evaluating external directory: %s\n", currPath);
     }else if(0 && getcwd(temp, sizeof(temp))){   //we werent given a directory so we default to the current dir
         currPath = malloc((strlen(temp) + 2) * sizeof(char));
         strcpy(currPath, temp);
         strcat(currPath, "/");
-        //currPath = strdup(temp);
-        //printf("%s\n", currPath);
-        //printf("Current Path: %s\n", currPath);
     }else{
-        //currPath = malloc(3 * sizeof(char));
-        //currPath = "./";
          currPath = strdup("./");
-         
                                           //we are unable to get the path ERROR
-        //printf("Path error!\n");
-        //exit(1);
     }
-    //currentPath = strdup(currPath);
     //setting up directory and incremental variables
     DIR* myDir;
     struct dirent * entry;
@@ -154,7 +121,6 @@ void mylsrHelper(char * dirName){
 
 
     if((myDir = opendir(currPath)) != NULL){
-        //perror("oppened directory \n");
         while((entry = readdir(myDir)) != NULL){
             char * name = entry->d_name; //gets the file name
             if(name == NULL){ //skips nyll names
@@ -182,9 +148,6 @@ void mylsrHelper(char * dirName){
                     strcat(filePath, name);
                     if(stat(filePath, &posDir) >= 0){
                         if(S_ISDIR(posDir.st_mode)){
-
-                            //printf("Found sub directory %s\n", filePath);
-
                             subDirs[numSubDirs] = strdup(filePath);
                             numSubDirs++;
                         }else{
@@ -207,28 +170,21 @@ void mylsrHelper(char * dirName){
         }else{                      //unable to open the directory ERROR
             printf("Problem openning directory.\n");
             return;
-            //exit(1);
         }
         
     }
     
-    
     qsort(curFiles, numCurFiles, sizeof(char *), myCompare);
-    
-    
     if(numSubDirs > 0 && root){
         printf("%s:\n", currPath);
         root = 0;
     }
     
-
     print(curFiles, numCurFiles, currPath);
     int i;
     for(i = 0; i < numCurFiles; i++){
         free(curFiles[i]);
     }
-
-    
 
     qsort(subDirs, numSubDirs, sizeof(char *), myCompare);
     for(i = 0; i < numSubDirs; i++){
@@ -242,12 +198,12 @@ void mylsrHelper(char * dirName){
         free(subDirs[i]);
     }
 
-
     free(curFiles);
     free(currPath);
     free(subDirs);
 }
 
+/*
 void subdir(char ** curFiles, int numCurFiles, char * currentPath){
     int i;
     for(i = 0; i < numCurFiles; i++){
@@ -261,6 +217,7 @@ void subdir(char ** curFiles, int numCurFiles, char * currentPath){
         }
     }
 }
+*/
 
 //takes in all arguments and calls an ls on each default is current directory
 void mylsr(char **roots, int num) { 

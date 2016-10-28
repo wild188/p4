@@ -20,7 +20,6 @@ char * currentPath;
 
 void print(){
     int i;
-    
     for(i = 0; i < numCurFiles; i++){
         struct stat fileInfo;
         char filePath[1024];
@@ -36,7 +35,6 @@ void print(){
                 printf("%s\n", curFiles[i]);
             }
         }else{
-            //printf("%s\n", filePath);
             perror("Failed to stat file\n");
         }
         
@@ -48,17 +46,14 @@ static int myCompare(const void * word1, const void * word2){
     //converting the void pointers to char stars
     char * w1 = *(char * const *)(word1);
     char * w2 = *(char * const *)(word2);
-
     //incremental variables
     char a, b;
     int i = 0;
     int h = 0;
-
     //compares each charachter from beginning to end unless unequal
     while(w1[i] && w2[h]){
         a = w1[i];
         b = w2[h];
-        
         //ignore non alphanumeric characters
         if(!isalnum(a)){
             i++;
@@ -68,11 +63,9 @@ static int myCompare(const void * word1, const void * word2){
             h++;
             continue;
         }
-
         //puts all characters to lower case
         a = tolower(a);
         b = tolower(b);
-        
         //if characters are not equal return the difference
         if(a != b){
             return (a - b);
@@ -80,7 +73,6 @@ static int myCompare(const void * word1, const void * word2){
         i++;
         h++;
     }
-
     //return negative or possitive if one word is longer
     if(w1[i]){
         return w1[i];
@@ -91,15 +83,9 @@ static int myCompare(const void * word1, const void * word2){
     printf("compare returning 0\n");
     //the words are alphabetically the same
     return 0;
-
-    //int result = strcmp((* (char * const *)(word1)), (* (char * const *)(word2)));
-    //return result;
 }
 
 void mylsaHelper(char * dirName){
-
-    //printf("entering old myls\n");
-
     //getting the path to the directory we will analyze
     char * currPath;
     char temp[1024];
@@ -116,9 +102,6 @@ void mylsaHelper(char * dirName){
         currPath = malloc((strlen(temp) + 2) * sizeof(char));
         strcpy(currPath, temp);
         strcat(currPath, "/");
-        //currPath = strdup(temp);
-        //printf("%s\n", currPath);
-        //printf("Current Path: %s\n", currPath);
     }else{                                  //we are unable to get the path ERROR
         printf("Path error!\n");
         exit(1);
@@ -132,24 +115,19 @@ void mylsaHelper(char * dirName){
     numCurFiles = 0;
 
     if((myDir = opendir(currPath)) != NULL){
-        //perror("oppened directory \n");
         while((entry = readdir(myDir)) != NULL){
             char * name = entry->d_name; //gets the file name
             if(name == NULL){ //skips nyll names
                 continue;
             }else{
-                
-                    numCurFiles++;
-
-                    //increments file buffer if we excede 1024 files
-                    if(numCurFiles > (1024 * buffinc)){
-                        curFiles = realloc(curFiles, ((numCurFiles + 1024) * sizeof(char *)));
-                        buffinc++;
-                    }
-
-                    //stores the name of the file in the file list
-                    curFiles[numCurFiles -1] = strdup(name);
-                
+                numCurFiles++;
+                //increments file buffer if we excede 1024 files
+                if(numCurFiles > (1024 * buffinc)){
+                    curFiles = realloc(curFiles, ((numCurFiles + 1024) * sizeof(char *)));
+                    buffinc++;
+                }
+                //stores the name of the file in the file list
+                curFiles[numCurFiles -1] = strdup(name);
             }
         }
         closedir(myDir);
@@ -160,10 +138,7 @@ void mylsaHelper(char * dirName){
             printf("Problem openning directory.\n");
             exit(1);
         }
-        
     }
-    
-
     qsort(curFiles, numCurFiles, sizeof(char *), myCompare);
     print();
     int i;
@@ -177,7 +152,6 @@ void mylsaHelper(char * dirName){
 
 //takes in all arguments and calls an ls on each default is current directory
 void mylsa(char **roots, int num) { 
- 
     if(num == 0){
         mylsaHelper(NULL);
         return;
@@ -271,7 +245,6 @@ int main(int argc, char **argv) {
     }
 
     /* TODO: fix this invocation */
-    
     if(argc > 1){
         mylsa(++argv, --argc);
     }else{

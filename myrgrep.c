@@ -14,13 +14,11 @@
 /*
  * myrgrep() - find files (recursively) with matching pattern
  */
-
- char * searchString;
+char * searchString;
 char * prefix;
 int root;
 
 int grep_file(char *filename, char *searchstr) {
-  //printf("grepping %s for %s\n", filename ,searchstr);
   FILE *file = fopen(filename, "r");
   if(!file){
       printf("Cannot open %s\n", filename);
@@ -30,7 +28,6 @@ int grep_file(char *filename, char *searchstr) {
   char line[1024];
   while(fgets(line, 1024, file)){
     if(strstr(line, searchstr) != NULL){
-      //printf("%s", line);
        fclose(file);
       return 1;
     }
@@ -41,7 +38,6 @@ int grep_file(char *filename, char *searchstr) {
 
 void print(char ** curFiles, int numCurFiles, char * currentPath){
     int i;
-    //printf("printing\n");
     for(i = 0; i < numCurFiles; i++){
         struct stat fileInfo;
         char filePath[1024];
@@ -57,15 +53,6 @@ void print(char ** curFiles, int numCurFiles, char * currentPath){
                 continue;
             }
             printf("%s\n", filePath);
-            /*
-            if(S_ISDIR(fileInfo.st_mode)){
-                printf("%s/\n", curFiles[i]);
-            }else if(fileInfo.st_mode & S_IXUSR){
-                printf("%s*\n", curFiles[i]);
-            }else{
-                printf("%s\n", curFiles[i]);
-            }
-            */
         }else{
             printf("%s\n", filePath);
             perror("Failed to stat file\n");
@@ -128,10 +115,6 @@ static int myCompare(const void * word1, const void * word2){
 
 
 void myrgrepHelper(char * dirName){
-    //printf("opening dir %s \n", dirName);
-
-    //printf("entering old myls\n");
-
     //getting the path to the directory we will analyze
     char * currPath;
     char temp[1024];
@@ -140,29 +123,14 @@ void myrgrepHelper(char * dirName){
     if(dirName != NULL){                   //we were given a directory so we use that one
 
         currPath = strdup(dirName);
-        /*
-        int len = strlen(dirName);
-        currPath = malloc((len + 1)* (sizeof(char)));
-        strcpy(currPath, dirName);
-        */
-        //printf("Evaluating external directory: %s\n", currPath);
     }else if(0 && getcwd(temp, sizeof(temp))){   //we werent given a directory so we default to the current dir
         currPath = malloc((strlen(temp) + 2) * sizeof(char));
         strcpy(currPath, temp);
         strcat(currPath, "/");
-        //currPath = strdup(temp);
-        //printf("%s\n", currPath);
-        //printf("Current Path: %s\n", currPath);
     }else{
-        //currPath = malloc(3 * sizeof(char));
-        //currPath = "./";
-         currPath = strdup("./");
-         
+         currPath = strdup("./");     
                                           //we are unable to get the path ERROR
-        //printf("Path error!\n");
-        //exit(1);
     }
-    //currentPath = strdup(currPath);
     //setting up directory and incremental variables
     DIR* myDir;
     struct dirent * entry;
@@ -175,7 +143,6 @@ void myrgrepHelper(char * dirName){
 
 
     if((myDir = opendir(currPath)) != NULL){
-        //perror("oppened directory \n");
         while((entry = readdir(myDir)) != NULL){
             char * name = entry->d_name; //gets the file name
             if(name == NULL){ //skips nyll names
@@ -203,9 +170,6 @@ void myrgrepHelper(char * dirName){
                     strcat(filePath, name);
                     if(stat(filePath, &posDir) >= 0){
                         if(S_ISDIR(posDir.st_mode)){
-
-                            //printf("Found sub directory %s\n", filePath);
-
                             subDirs[numSubDirs] = strdup(filePath);
                             numSubDirs++;
                         }else{
@@ -228,7 +192,6 @@ void myrgrepHelper(char * dirName){
         }else{                      //unable to open the directory ERROR
             printf("Problem openning directory.\n");
             return;
-            //exit(1);
         }
         
     }
@@ -257,7 +220,6 @@ void myrgrepHelper(char * dirName){
         subPath[0] = '\0';
         strcat(subPath, currPath);
         strcat(subPath, subDirs[i]);
-        //printf("\n%s:\n", subDirs[i]);
         myrgrepHelper(subDirs[i]);
         free(subPath);
         free(subDirs[i]);
